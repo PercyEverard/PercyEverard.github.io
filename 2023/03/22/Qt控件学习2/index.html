@@ -1,0 +1,118 @@
+<!-- build time:Sat Aug 05 2023 22:07:08 GMT+0800 (中国标准时间) --><!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=2"><meta name="theme-color" content="#FFF"><link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png"><link rel="icon" type="image/ico" sizes="32x32" href="/images/favicon.ico"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link rel="alternate" type="application/rss+xml" title="fengyepiaosa" href="https://percyeverard.github.io/rss.xml"><link rel="alternate" type="application/atom+xml" title="fengyepiaosa" href="https://percyeverard.github.io/atom.xml"><link rel="alternate" type="application/json" title="fengyepiaosa" href="https://percyeverard.github.io/feed.json"><link rel="stylesheet" href="//fonts.googleapis.com/css?family=Mulish:300,300italic,400,400italic,700,700italic%7CFredericka%20the%20Great:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20JP:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20SC:300,300italic,400,400italic,700,700italic%7CInconsolata:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext"><link rel="stylesheet" href="/css/app.css?v=0.2.5"><link rel="canonical" href="https://percyeverard.github.io/2023/03/22/Qt%E6%8E%A7%E4%BB%B6%E5%AD%A6%E4%B9%A02/"><title>Qt控件学习2 | Yume Shoka = fengyepiaosa = 记录生活！</title><meta name="generator" content="Hexo 6.3.0"></head><body itemscope itemtype="http://schema.org/WebPage"><div id="loading"><div class="cat"><div class="body"></div><div class="head"><div class="face"></div></div><div class="foot"><div class="tummy-end"></div><div class="bottom"></div><div class="legs left"></div><div class="legs right"></div></div><div class="paw"><div class="hands left"></div><div class="hands right"></div></div></div></div><div id="container"><header id="header" itemscope itemtype="http://schema.org/WPHeader"><div class="inner"><div id="brand"><div class="pjax"><h1 itemprop="name headline">Qt控件学习2</h1><div class="meta"><span class="item" title="创建时间：2023-03-22 16:14:17"><span class="icon"><i class="ic i-calendar"></i> </span><span class="text">发表于</span> <time itemprop="dateCreated datePublished" datetime="2023-03-22T16:14:17+08:00">2023-03-22</time></span></div></div></div><nav id="nav"><div class="inner"><div class="toggle"><div class="lines" aria-label="切换导航栏"><span class="line"></span> <span class="line"></span> <span class="line"></span></div></div><ul class="menu"><li class="item title"><a href="/" rel="start">Yume Shoka</a></li></ul><ul class="right"><li class="item theme"><i class="ic i-sun"></i></li><li class="item search"><i class="ic i-search"></i></li></ul></div></nav></div><div id="imgs" class="pjax"><ul><li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1gipew28b65j20zk0m8hdt.jpg"></li><li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1gipey0a334j20zk0m8qpt.jpg"></li><li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1gipeybxm1pj20zk0m8niv.jpg"></li><li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1giciub8ja1j20zk0m81ky.jpg"></li><li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1gipetlbztpj20zk0m84qp.jpg"></li><li class="item" data-background-image="https://tva4.sinaimg.cn/large/6833939bly1giclffsa1cj20zk0m811l.jpg"></li></ul></div></header><div id="waves"><svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto"><defs><path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"/></defs><g class="parallax"><use xlink:href="#gentle-wave" x="48" y="0"/><use xlink:href="#gentle-wave" x="48" y="3"/><use xlink:href="#gentle-wave" x="48" y="5"/><use xlink:href="#gentle-wave" x="48" y="7"/></g></svg></div><main><div class="inner"><div id="main" class="pjax"><div class="article wrap"><div class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList"><i class="ic i-home"></i> <span><a href="/">首页</a></span></div><article itemscope itemtype="http://schema.org/Article" class="post block" lang="zh-CN"><link itemprop="mainEntityOfPage" href="https://percyeverard.github.io/2023/03/22/Qt%E6%8E%A7%E4%BB%B6%E5%AD%A6%E4%B9%A02/"><span hidden itemprop="author" itemscope itemtype="http://schema.org/Person"><meta itemprop="image" content="/images/avatar.jpg"><meta itemprop="name" content="Percy Everard"><meta itemprop="description" content="记录生活！, welcome to wenfeng's blog!"></span><span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization"><meta itemprop="name" content="fengyepiaosa"></span><div class="body md" itemprop="articleBody"><p><span id="more"></span></p><h1 id="1-qlabel旋转"><a class="anchor" href="#1-qlabel旋转">#</a> 1. QLabel 旋转</h1><p>继承 QLabel 重写 paintEvent 函数</p><h2 id="11-无ui代码"><a class="anchor" href="#11-无ui代码">#</a> 1.1 无 ui 代码</h2><ul><li>widget.h</li></ul><pre><code>#ifndef WIDGET_H
+#define WIDGET_H
+
+#include &lt;QWidget&gt;
+#include &lt;QTimer&gt;
+#include &lt;QPushButton&gt;
+
+namespace Ui &#123;
+class Widget;
+&#125;
+
+class Widget : public QWidget
+&#123;
+    Q_OBJECT
+
+public:
+    explicit Widget(QWidget *parent = 0);
+    ~Widget();
+
+private:
+    Ui::Widget *ui;
+    QTimer *m_pTimer;
+
+    int m_Rote=0;
+
+    QPushButton *m_pbtn=nullptr;
+    bool m_bStart=false;
+
+protected:
+    void paintEvent(QPaintEvent *event);
+
+public slots:
+    void upDateRote();
+
+    void onStartorStopRote();
+&#125;;
+
+#endif // WIDGET_H
+
+</code></pre><ul><li>widget.cpp</li></ul><pre><code>#include &quot;widget.h&quot;
+#include &quot;ui_widget.h&quot;
+#include &lt;QPushButton&gt;
+#include &lt;QTimer&gt;
+#include &lt;QPainter&gt;
+#include &lt;QDebug&gt;
+
+Widget::Widget(QWidget *parent) :
+    QWidget(parent),
+    ui(new Ui::Widget)
+&#123;
+    ui-&gt;setupUi(this);
+    this-&gt;resize(800,500);
+    m_pTimer=new QTimer();
+    connect(m_pTimer,&amp;QTimer::timeout,this,&amp;Widget::upDateRote);
+    //m_pTimer-&gt;start(100);
+
+    m_pbtn=new QPushButton(this);
+    m_pbtn-&gt;setText(tr(&quot;Start&quot;));
+    m_pbtn-&gt;setFixedSize(118,27);
+    connect(m_pbtn,&amp;QPushButton::clicked,this,&amp;Widget::onStartorStopRote);
+&#125;
+
+Widget::~Widget()
+&#123;
+    delete ui;
+&#125;
+
+void Widget::paintEvent(QPaintEvent *event)
+&#123;
+    Q_UNUSED(event);
+    QPainter painter(this);
+    painter.setRenderHint(QPainter::Antialiasing, true);
+    QPainterPath painterPath;
+    painterPath.addEllipse(100,100,200,200);
+    painter.setClipPath(painterPath);
+    painter.drawPath(painterPath);
+
+    QPixmap pixMap(&quot;:/music.png&quot;);
+
+    QTransform transform;
+    transform.translate(200,200);  //平移坐标原点  必须
+    painter.setTransform(transform);
+
+
+    painter.save();
+    painter.rotate(2*m_Rote);
+      //将需要旋转的内容绘制在中间
+    painter.drawPixmap(-100,-100,200,200,pixMap);  //旋转操作始终是围绕坐标原点进行旋转
+    painter.restore();
+
+
+&#125;
+
+void Widget::upDateRote()
+&#123;
+    m_Rote=m_Rote+1;
+    if(m_Rote==180)
+    &#123;
+        m_Rote=0;
+    &#125;
+    update();
+&#125;
+
+void Widget::onStartorStopRote()
+&#123;
+    m_bStart=!m_bStart;
+    if(m_bStart)
+    &#123;
+        m_pTimer-&gt;start(100);
+        m_pbtn-&gt;setText(tr(&quot;Stop&quot;));
+    &#125;
+    else
+    &#123;
+        m_pTimer-&gt;stop();
+        m_pbtn-&gt;setText(tr(&quot;Start&quot;));
+    &#125;
+&#125;
+</code></pre></div><footer><div class="meta"><span class="item"><span class="icon"><i class="ic i-calendar-check"></i> </span><span class="text">更新于</span> <time title="修改时间：2023-03-22 20:55:45" itemprop="dateModified" datetime="2023-03-22T20:55:45+08:00">2023-03-22</time></span></div><div class="reward"><button><i class="ic i-heartbeat"></i> 赞赏</button><p>请我喝[茶]~(￣▽￣)~*</p><div id="qr"><div><img data-src="/images/wechatpay.png" alt="Percy Everard 微信支付"><p>微信支付</p></div><div><img data-src="/images/alipay.png" alt="Percy Everard 支付宝"><p>支付宝</p></div><div><img data-src="/images/paypal.png" alt="Percy Everard 贝宝"><p>贝宝</p></div></div></div><div id="copyright"><ul><li class="author"><strong>本文作者： </strong>Percy Everard <i class="ic i-at"><em>@</em></i>fengyepiaosa</li><li class="link"><strong>本文链接：</strong> <a href="https://percyeverard.github.io/2023/03/22/Qt%E6%8E%A7%E4%BB%B6%E5%AD%A6%E4%B9%A02/" title="Qt控件学习2">https://percyeverard.github.io/2023/03/22/Qt控件学习2/</a></li><li class="license"><strong>版权声明： </strong>本站所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</span> 许可协议。转载请注明出处！</li></ul></div></footer></article></div><div class="post-nav"><div class="item left"><a href="/2023/03/15/%E8%87%AA%E5%AE%9A%E4%B9%89map%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E7%9A%84%E6%AF%94%E8%BE%83%E5%87%BD%E6%95%B0%E7%9A%84%E5%9B%9B%E7%A7%8D%E6%96%B9%E6%B3%95/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;tva4.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1giciundwu5j20zk0m8n9e.jpg" title="自定义map数据类型的比较函数的四种方法"><span class="type">上一篇</span> <span class="category"><i class="ic i-flag"></i> 编程拓展</span><h3>自定义map数据类型的比较函数的四种方法</h3></a></div><div class="item right"><a href="/2023/03/23/libGL/" itemprop="url" rel="next" data-background-image="https:&#x2F;&#x2F;tva4.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1giclgrvbd6j20zk0m8qv5.jpg" title="Linux环境下Qt报错libGL"><span class="type">下一篇</span> <span class="category"><i class="ic i-flag"></i> Study</span><h3>Linux环境下Qt报错libGL</h3></a></div></div><div class="wrap" id="comments"></div></div><div id="sidebar"><div class="inner"><div class="panels"><div class="inner"><div class="contents panel pjax" data-title="文章目录"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-qlabel%E6%97%8B%E8%BD%AC"><span class="toc-number">1.</span> <span class="toc-text">1. QLabel 旋转</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#11-%E6%97%A0ui%E4%BB%A3%E7%A0%81"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 无 ui 代码</span></a></li></ol></li></ol></div><div class="related panel pjax" data-title="系列文章"></div><div class="overview panel" data-title="站点概览"><div class="author" itemprop="author" itemscope itemtype="http://schema.org/Person"><img class="image" itemprop="image" alt="Percy Everard" data-src="/images/avatar.jpg"><p class="name" itemprop="name">Percy Everard</p><div class="description" itemprop="description">welcome to wenfeng's blog!</div></div><nav class="state"><div class="item posts"><a href="/archives/"><span class="count">68</span> <span class="name">文章</span></a></div><div class="item categories"><a href="/categories/"><span class="count">25</span> <span class="name">分类</span></a></div><div class="item tags"><a href="/tags/"><span class="count">55</span> <span class="name">标签</span></a></div></nav><div class="social"></div><ul class="menu"><li class="item"><a href="/" rel="section"><i class="ic i-home"></i>首页</a></li></ul></div></div></div><ul id="quick"><li class="prev pjax"><a href="/2023/03/15/%E8%87%AA%E5%AE%9A%E4%B9%89map%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E7%9A%84%E6%AF%94%E8%BE%83%E5%87%BD%E6%95%B0%E7%9A%84%E5%9B%9B%E7%A7%8D%E6%96%B9%E6%B3%95/" rel="prev" title="上一篇"><i class="ic i-chevron-left"></i></a></li><li class="up"><i class="ic i-arrow-up"></i></li><li class="down"><i class="ic i-arrow-down"></i></li><li class="next pjax"><a href="/2023/03/23/libGL/" rel="next" title="下一篇"><i class="ic i-chevron-right"></i></a></li><li class="percent"></li></ul></div></div><div class="dimmer"></div></div></main><footer id="footer"><div class="inner"><div class="widgets"><div class="rpost pjax"><h2>随机文章</h2><ul><li class="item"><div class="breadcrumb"><a href="/categories/Mathine-Learning/" title="分类于 Mathine Learning">Mathine Learning</a></div><span><a href="/2022/11/23/%E4%BA%A4%E5%8F%89%E9%AA%8C%E8%AF%81/" title="交叉验证">交叉验证</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2023/04/23/xlog-%E5%9B%BE%E5%BA%8A/" title="xlog&#x2F;图床">xlog/图床</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/Study/" title="分类于 Study">Study</a></div><span><a href="/2022/05/26/Huffman%E7%BC%96%E7%A0%81/" title="Huffman编码">Huffman编码</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/Blog/" title="分类于 Blog">Blog</a></div><span><a href="/2022/11/23/%E6%8F%92%E5%85%A5YouTube%E8%A7%86%E9%A2%91/" title="插入YouTube视频">插入YouTube视频</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/Blog/" title="分类于 Blog">Blog</a></div><span><a href="/2023/04/25/%E8%AE%B0%E4%BF%AE%E6%94%B9%E5%8D%9A%E5%AE%A2%E4%B8%BB%E9%A1%B5%E6%A0%B7%E5%BC%8F/" title="记修改博客主页样式">记修改博客主页样式</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/Mathine-Learning/" title="分类于 Mathine Learning">Mathine Learning</a></div><span><a href="/2022/11/23/%E7%BB%B4%E5%BA%A6%E7%81%BE%E9%9A%BE/" title="维度灾难">维度灾难</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2023/03/28/Qt%E6%8E%A7%E4%BB%B6%E5%AD%A6%E4%B9%A03/" title="Qt控件学习3">Qt控件学习3</a></span></li><li class="item"><div class="breadcrumb"></div><span><a href="/2023/03/13/Qt-Designer%E5%B8%B8%E8%A7%81%E6%93%8D%E4%BD%9C/" title="Qt-Designer常见操作">Qt-Designer常见操作</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/report-an-error/" title="分类于 report an error">report an error</a></div><span><a href="/2022/12/11/docker%E6%89%93%E5%BC%80%E6%8A%A5%E9%94%99/" title="docker打开报错">docker打开报错</a></span></li><li class="item"><div class="breadcrumb"><a href="/categories/%E5%8D%9A%E5%AE%A2%E5%8E%86%E7%A8%8B/" title="分类于 博客历程">博客历程</a></div><span><a href="/2023/04/03/categories-tags-setting/" title="categories-tags-setting">categories-tags-setting</a></span></li></ul></div><div><h2>最新评论</h2><ul class="leancloud-recent-comment"></ul></div></div><div class="status"><div class="copyright">&copy; 2010 – <span itemprop="copyrightYear">2023</span> <span class="with-love"><i class="ic i-sakura rotate"></i> </span><span class="author" itemprop="copyrightHolder">Percy Everard @ Yume Shoka</span></div><div class="powered-by">基于 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & Theme.<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FtZWhpbWUvaGV4by10aGVtZS1zaG9rYQ==">Shoka</span></div></div></div></footer></div><script data-config type="text/javascript">var LOCAL={path:"2023/03/22/Qt控件学习2/",favicon:{show:"（●´3｀●）やれやれだぜ",hide:"(´Д｀)大変だ！"},search:{placeholder:"文章搜索",empty:"关于 「 ${query} 」，什么也没搜到",stats:"${time} ms 内找到 ${hits} 条结果"},valine:!0,fancybox:!0,copyright:'复制成功，转载请遵守 <i class="ic i-creative-commons"></i>BY-NC-SA 协议。',ignores:[function(e){return e.includes("#")},function(e){return new RegExp(LOCAL.path+"$").test(e)}]}</script><script src="https://cdn.polyfill.io/v2/polyfill.js"></script><script src="//cdn.jsdelivr.net/combine/npm/pace-js@1.0.2/pace.min.js,npm/pjax@0.2.8/pjax.min.js,npm/whatwg-fetch@3.4.0/dist/fetch.umd.min.js,npm/animejs@3.2.0/lib/anime.min.js,npm/algoliasearch@4/dist/algoliasearch-lite.umd.js,npm/instantsearch.js@4/dist/instantsearch.production.min.js,npm/lozad@1/dist/lozad.min.js,npm/quicklink@2/dist/quicklink.umd.js"></script><script src="/js/app.js?v=0.2.5"></script></body></html><!-- rebuild by hrmmi -->
